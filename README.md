@@ -1,1 +1,2 @@
-# Budget-Rabbit
+# scratch-project
+Budgeting/Spending Tracker
