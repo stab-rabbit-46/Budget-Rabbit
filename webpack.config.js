@@ -8,11 +8,16 @@ module.exports = {
         path: path.join(__dirname, 'public')
     },
     mode: process.env.NODE_ENV,
+    
     module: {
         rules: [{
             loader: 'babel-loader',
             test: /\.jsx?/,
-            exclude: /node_modules/
+            exclude: /node_modules/,
+            options: {
+                presets: ['@babel/env', '@babel/react'],
+                // module: ['@babel/plugin-transform-runtime', '@babel/transform-async-to-generator'],
+              },
         },
         {
             test: /\.s[ac]ss$/i,
@@ -21,7 +26,8 @@ module.exports = {
         {
             test: /\.png$/i,
             type: 'asset/resource'
-        }]
+            
+        }],
     },
     devServer: {
         static: path.join(__dirname, 'public'),
