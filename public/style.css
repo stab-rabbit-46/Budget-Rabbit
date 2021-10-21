@@ -54,6 +54,13 @@ td {
     text-decoration: underline;
 }
 
+.budgetUpdater {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+}
+
 .transactionTable {
     overflow:scroll;
     height: 250px;
@@ -82,10 +89,10 @@ button {
 #editButton:hover {
     background-color: #5473869a;
 
-    animation-duration: 2s;
+    /* animation-duration: 2s;
     animation-name: spin;
     animation-iteration-count: infinite;
-    animation-timing-function: linear;
+    animation-timing-function: linear; */
 }
 
 #editButton:active {

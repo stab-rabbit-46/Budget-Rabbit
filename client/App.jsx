@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import MainContainer from './containers/mainContainer.jsx';
 
 const App = () => {
@@ -9,6 +8,5 @@ const App = () => {
         </div>
     )
 }
-
 
 export default App;
