@@ -80,7 +80,8 @@ class PieChart extends Component {
               ],
             }]
           })
-          console.log(this.state.data)
+          // is this what is causing the undefined??
+          console.log('inside pieChart.jsx getData', this.state.data)
         })
         .catch(err => console.log(err))
     }

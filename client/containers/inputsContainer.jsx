@@ -2,9 +2,11 @@ import React from 'react';
 
 function inputsContainer({ transactionName, transactionAmount, setTransactionName, setTransactionAmount, transactionCategory, setTransactionCategory, submit }) {
   const optionsArr = ['Housing/Rent', 'Utilities', 'Gas', 'Groceries', 'Dining Out', 'Drinks', 'Entertainment', 'Savings', 'Other'];
-  const option = optionsArr.map((opt, idx) => {
-    <option value={idx} key={idx}>opt</option>
-  })
+
+  const option = [<option value="" selected disabled hidden >Choose Category</option>];
+  for(let i = 0, len = optionsArr.length; i < len; i++){
+    option.push(<option value={i} key={i}>{optionsArr[i]}</option>)
+  }
   
   return (
     <div className = 'inputContainer'>
@@ -33,7 +35,7 @@ function inputsContainer({ transactionName, transactionAmount, setTransactionNam
         value={transactionCategory} 
         onChange={e => setTransactionCategory(e.target.value)}
         >
-        <option disabled selected value="1">Choose Category</option>
+        {/* <option disabled selected value="1">Choose Category</option> */}
         {option}
       </select>
       <button onClick={submit} id="submitButton">Add Transaction</button>

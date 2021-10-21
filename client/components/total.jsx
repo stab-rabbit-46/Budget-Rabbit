@@ -19,9 +19,9 @@ const [newTotal, setNewTotal] = useState('');
   }, [])
 
   const renderTotal = () => {
-    const rows = [];
-    const total = newTotal;
-    return 'Total: $' + total;
+    // const rows = [];
+    // const total = newTotal;
+    return 'Total: $' + newTotal;
   }
 
   return (

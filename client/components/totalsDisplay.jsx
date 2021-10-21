@@ -9,7 +9,7 @@ const TotalsDisplay = ({ total }) => {
       <div>
         Budget:
         <br></br>
-        {budget}
+        <center>{budget}</center>
       </div>
       <div>
         Total Spent:
