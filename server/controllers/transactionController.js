@@ -10,14 +10,9 @@ transactionController.addTransaction = (req, res, next) => {
     //req.body is going to contain transaction name, amount, and category
     const addTransQuery = `INSERT INTO public.transactions (name, amount, date, category_id) VALUES ($1, $2, $3, $4) RETURNING *`; 
     const values = [req.body.name, req.body.amount, req.body.date, req.body.category_id]
-    // console.log(addTransQuery);
-    console.log('amount type: ', typeof req.body.amount);
-    // console.log(values);
 
     db.query(addTransQuery, values)
         .then(data => {
-            // console.log('rows:', data.rows);
-            // res.locals.data = data.rows[0]; // might be data.rows
             return next();
         })
         .catch( err => {
@@ -33,7 +28,6 @@ transactionController.getTransaction = (req, res, next) => {
     LEFT OUTER JOIN categories ON categories._id = transactions.category_id`;
     db.query(getTransQuery)
         .then(data => {
-            // console.log(data.rows);
             res.locals.data = data.rows;
             return next();
         })
@@ -43,15 +37,17 @@ transactionController.getTransaction = (req, res, next) => {
         });
 };
 
+// postgres://fefrvybx:D0xjzhQ5Jt7EQ4LoGRvqEVB3e5UH9D8x@fanny.db.elephantsql.com/fefrvybx
+
+
 //MIDDLEWARE FOR DELETING A TRANSACTION
 transactionController.deleteTransaction = (req, res, next) => {
-    const deleteQuery = `DELETE FROM transactions WHERE transaction_id=${req.body.id}`;
+    const deleteQuery = `DELETE FROM transactions WHERE _id=${req.body.id}`;
 
     //receive transaction_id from the request on req.body.id
     
     db.query(deleteQuery)
         .then(data => {
-            // console.log(data)
             return next();
         })
             .catch(err => {
@@ -67,8 +63,7 @@ transactionController.getTotal = (req, res, next) => {
     let total = 0;
         
     transactions.forEach( obj => {
-        total += obj.amount;
-        
+        total += Number(obj.amount);
     })
 
     res.locals.total = total;

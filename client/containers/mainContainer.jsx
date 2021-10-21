@@ -1,142 +1,84 @@
-import React, { useEffect, useState } from 'react';
-import InputsContainer from './inputsContainer.jsx';
-import DisplayContainer from './DisplayContainer.jsx';
-import logo from '../../Pockets-logo.png';
-
+import React, { useEffect, useState } from "react";
+import InputsContainer from "./inputsContainer.jsx";
+import DisplayContainer from "./DisplayContainer.jsx";
+import logo from "../../Pockets-logo.png";
+import utils from "../utils.js";
 
 function mainContainer() {
-  const [transactionName, setTransactionName] = useState('');
-  const [transactionAmount, setTransactionAmount] = useState('');
-  const [transactionCategory, setTransactionCategory] = useState('');
+  const [transactionName, setTransactionName] = useState("");
+  const [transactionAmount, setTransactionAmount] = useState("");
+  const [transactionCategory, setTransactionCategory] = useState("");
   const [total, setTotal] = useState(0);
+  const [allTransactions, setAllTransactions] = useState([]);
+  const [categoryPercent, setCategoryPercent ] = useState([11, 11, 11, 11, 11, 11, 11, 11, 11])
   
+
   useEffect(() => {
-    //Get request?
-  }, [])
-  
-  // if transaction category equal to ''
+    fetch("http://localhost:8080/api/transactions")
+      .then((response) => response.json())
+      .then((data) => {
+        setAllTransactions(data.data);
+        setTotal(data.total);
+        utils.updatePieChart(data.data, data.total, setCategoryPercent);
+      })
+      .catch((err) => {
+        console.log("error fetching transaction data", err);
+      });
+  }, []);
+
   const submit = () => {
-    if (!transactionCategory === '') {
-      fetch('/api/transactions', {
-        method: 'POST',
+    if (transactionCategory !== "") {
+      fetch("/api/transactions", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           name: transactionName,
           amount: transactionAmount,
           date: new Date().toLocaleDateString(),
-          category_id: transactionCategory
-        })
+          category_id: transactionCategory,
+        }),
       })
-        .then(response => response.json())
-        .then(data => {
-          console.log('data: line 32 in mainContainer: ', data);
-          const transactions = data.data;
-          // // transactions.push(data);
-          // this.setState({
-          //   transactions: transactions,
-          //   total: data.total
-          // });
-          // document.location.reload();
+        .then((response) => response.json())
+        .then((data) => {
+          setAllTransactions(data.data);
+          setTotal(data.total);
+          utils.updatePieChart(data.data, data.total, setCategoryPercent);
+          setTransactionName('');
+          setTransactionAmount('');
+          setTransactionCategory('');
         })
-        .catch(err => console.log(err));
-    }
-    else {
-      console.log('submit was clicked while category was still "choose category"');
+        .catch((err) => console.log(err));
+    } else {
+      console.log(
+        'submit was clicked while category was still "choose category"',
+      );
     }
   };
 
-  return (  
-  <div className = 'mainContainer'>
-    <img src={logo} id="logo"/>
-    <InputsContainer 
-      transactionName={transactionName} 
-      transactionAmount={transactionAmount} 
-      setTransactionName={setTransactionName} 
-      setTransactionAmount={setTransactionAmount} 
-      transactionCategory={transactionCategory} 
-      setTransactionCategory={setTransactionCategory}
-      submit={submit}
-    />
-    <DisplayContainer
-      transactionName={transactionName}
-      transactionAmount={transactionAmount} 
-      total={total}
-    />
-  </div>
-  )
+  return (
+    <div className="mainContainer">
+      <img src={logo} id="logo" />
+      <InputsContainer
+        transactionName={transactionName}
+        transactionAmount={transactionAmount}
+        setTransactionName={setTransactionName}
+        setTransactionAmount={setTransactionAmount}
+        transactionCategory={transactionCategory}
+        setTransactionCategory={setTransactionCategory}
+        submit={submit}
+      />
+      <DisplayContainer
+        total={total}
+        setTotal={setTotal}
+        allTransactions={allTransactions}
+        setAllTransactions={setAllTransactions}
+        categoryPercent={categoryPercent}
+        setCategoryPercent={setCategoryPercent}
+      />
+    </div>
+  );
 }
 
 export default mainContainer;
-
-
-// import React, { Component } from 'react';
-// import InputsContainer from './inputsContainer.jsx';
-// import DisplayContainer from './displayContainer.jsx';
-
-// import logo from '../../Pockets-logo.png';
-
-
-// class MainContainer extends Component {
-//     constructor(props) {
-//       super(props);
-
-//       this.state = {
-//         transactions: [],
-//         total: 0,
-//       };
-
-//       this.submit = this.submit.bind(this);
-
-//     }
-
-//     submit(){
-//       console.log('submit activated')
-//       if(document.getElementById('category').value !== "1"){
-//         fetch('/api/transactions', {
-//           method: 'POST',
-//           headers: {
-//             'Content-Type': 'application/json'
-//           },
-//           body: JSON.stringify({
-//             name: document.getElementById('transactionName').value,
-//             amount: document.getElementById('transactionAmt').value,
-//             date: new Date().toLocaleDateString(),
-//             category_id: document.getElementById('category').value
-//           })
-//         })
-//         .then(response => response.json())
-//         .then(data => {
-//           // console.log(data);
-//           // console.log(this.state);
-//           const transactions = data.data;
-//           // // transactions.push(data);
-//           this.setState({
-//             transactions: transactions,
-//             total: data.total
-//           });
-//           // document.location.reload();
-//         })
-//         })
-//         .catch(err => console.log(err));
-//       }
-//       else{
-//         console.log('submit was clicked while category was still "choose category"');
-//       }
-//     };
-
-
-
-//     render(){
-//       return (
-//         <div className = 'mainContainer'>
-//           <img src={logo} id="logo"/>
-//           <InputsContainer state={this.state} submit={this.submit}/>
-//           <DisplayContainer transactions={this.state.transactions} total={this.state.total} />
-//         </div>
-//       )
-//     };
-// }
-
-// export default MainContainer;

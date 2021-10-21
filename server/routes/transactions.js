@@ -6,7 +6,7 @@ const transactionController = require('../controllers/transactionController');
 
 //for displaying totals for transactions/summary data
 router.get('/', transactionController.getTransaction, transactionController.getTotal, (req, res) => {
-    // console.log(res.locals);
+    // console.log(res.locals)
     res.status(201).json({...res.locals});
 
     // getting error: Express error handler caught unknown middleware error
@@ -20,7 +20,7 @@ router.post('/', transactionController.addTransaction, transactionController.get
     //if re-rendering entire page everytime we add transaction, need to add getTransaction middleware
     //else if just updating that one thing, keep only addTransaction middleware (gives only single transaction)
     //data is everything returned from the insert query to the DB
-    console.log(res.locals);
+    // console.log(res.locals);
     return res.status(200).json({...res.locals});
 });
 
@@ -33,8 +33,9 @@ router.post('/', transactionController.addTransaction, transactionController.get
 router.delete('/', 
     transactionController.deleteTransaction,
     transactionController.getTransaction,
+    transactionController.getTotal,
     (req, res) => {
-        return res.sendStatus(200)
+        return res.status(200).json({...res.locals});
 });
 
 
