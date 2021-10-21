@@ -3,6 +3,7 @@ import InputsDisplay from '../components/inputsDisplay.jsx';
 import TotalsDisplay from '../components/totalsDisplay.jsx';
 import PieChart from '../components/pieChart.jsx';
 import Total from '../components/total.jsx';
+import BigPurchase from '../components/BigPurchase.jsx';
 
 export default function DisplayContainer({ total, setTotal, allTransactions, setAllTransactions, categoryPercent, setCategoryPercent }) {
 
@@ -20,6 +21,14 @@ export default function DisplayContainer({ total, setTotal, allTransactions, set
       />
       <div id="chartContainer">
         <TotalsDisplay total={total}/>
+        <PieChart
+          allTransactions={allTransactions}
+          total={total}
+          categoryPercent={categoryPercent}
+        />
+      </div>
+      <div id="chartContainer">
+        <BigPurchase total={total}/>
         <PieChart
           allTransactions={allTransactions}
           total={total}
