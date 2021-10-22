@@ -70,6 +70,57 @@ transactionController.getTotal = (req, res, next) => {
     return next();
 };
 
+// MIDDLEWARE FOR GETTING DEFAULT BUDGETS
+transactionController.getBudgets = (req, res, next) => {
+    const getBudgetQuery = `SELECT * FROM budgets`;
+    db.query(getBudgetQuery)
+        .then(data => {
+            // console.log('data inside getBudgets', data);
+            res.locals.budgets = data.rows;
+            return next();
+        })
+        .catch(err => {
+            console.log('get query error', err);
+            return next(err);
+        });
+};
+
+// MIDDLEWARE FOR EDITING BUDGETS
+// transactionController.editBudgets = async (req, res, next) => {
+//     const getBudgetQuery = `UPDATE budgets
+//     SET amount = ${req.body.amount}
+//     WHERE budget_name = '${req.body.budget_name}'`;
+//     await db.query(getBudgetQuery);
+//     console.log('req.body inside of controlller.editBudgets: ', req.body);
+
+
+//     const getAllBudgetQuery = `SELECT * FROM budgets`;
+//     await db.query(getAllBudgetQuery)
+//         .then(data => {
+//             // console.log('data inside editBudgets', data);
+//             res.locals.budget = data.rows;
+//             // res.locals.bigBudgetAmount = data.rows[0];
+//             return next();
+//         })
+//         .catch(err => {
+//             console.log('get query error', err);
+//             return next(err);
+//         });
+// };
+
+transactionController.editBudgets = async (req, res, next) => {
+    const getBudgetQuery = `UPDATE budgets
+    SET amount = ${req.body.amount}
+    WHERE budget_name = '${req.body.budget_name}'`;
+    await db.query(getBudgetQuery)
+        .then(() => {
+            return next();
+        })
+        .catch(err => {
+            console.log('get query error', err);
+            return next(err);
+        });
+};
 
 
 module.exports = transactionController;

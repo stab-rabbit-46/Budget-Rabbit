@@ -2,19 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
 import utils from "../utils";
 
-export default function pieChart({ categoryPercent }) {
+export default function pieChart({ categoryPercent, currentLabels, title }) {
   const pieChartObject = {
-    labels: [
-      "Housing/Rent",
-      "Utilities",
-      "Gas",
-      "Groceries",
-      "Dining Out",
-      "Drinks",
-      "Entertainment",
-      "Savings",
-      "Other",
-    ],
+    labels: currentLabels,
     datasets: [
       {
         data: categoryPercent,
@@ -48,7 +38,7 @@ export default function pieChart({ categoryPercent }) {
   return (
     <div className="pieChartContainer">
       <center>
-        <h3>Total Spending</h3>
+        <h3>{title}</h3>
         <Doughnut
           data={pieChartObject}
           options={utils.pieChartOptions}

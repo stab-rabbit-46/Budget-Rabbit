@@ -1,6 +1,6 @@
-/* * {
-    box-sizing: border-box;
-} */
+/* displayContainer {
+    background-color: white;
+}  */
 
 /* .mainContainer {
     border: 1px solid black;
@@ -18,8 +18,10 @@
 
 #logo {
     position: relative;
-    left: 33%;
-    width: 500px;
+    left: 38%;
+    width: 200px;
+    border-radius: 50%;
+    margin-top: 10px;
 }
 
 table.transactions {
@@ -165,23 +167,23 @@ button {
     justify-content: space-around;
 
     padding-right: 50px;
-    border: 1px solid #3C5360;
+    /* border: 1px solid #3C5360; */
     background-color: #E7E7E7;
     padding-bottom:  10px;
     padding-top: 20px;
     margin: 15px;
     text-align: center;
     border-radius: 10px;
-    box-shadow: 5px 5px 5px #C7C7C7;
+    box-shadow: 1px 1px 1px #3C5360;
 }
 
 .displayContainer {
-    border: 1px solid #3C5360;
+    /* border: 1px solid #3C5360; */
     background-color: #E7E7E7;
     padding: 5px 10px 5px 10px;
     margin: 15px;
     border-radius: 10px;
-    box-shadow: 5px 5px 5px #C7C7C7;
+    box-shadow: 1px 1px 1px #3C5360;
 }
 
 .transactionsDisplay {

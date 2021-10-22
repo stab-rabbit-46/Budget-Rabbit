@@ -109,7 +109,6 @@ describe('React unit tests', () => {
       global.fetch.mockRestore();
     });
     
-    
 
   })
 })

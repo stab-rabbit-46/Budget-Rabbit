@@ -1,15 +1,16 @@
-import React from 'react'
+import React, {useState} from 'react';
 
-const TotalsDisplay = ({ total }) => {
+const TotalsDisplay = ({ total, monthlyBudget, setMonthlyBudget, updateBudget, inputBudget, setInputBudget }) => {
 
-  const budget = 5000;
+
+
 
   return (
     <div className="totalsDisplay">
       <div>
         Budget:
         <br></br>
-        <center>{budget}</center>
+        <center>{monthlyBudget}</center>
       </div>
       <div>
         Total Spent:
@@ -19,11 +20,11 @@ const TotalsDisplay = ({ total }) => {
       <div>
         Remaining:
         <br></br>
-        <center>{budget - total}</center>
+        <center>{monthlyBudget - total}</center>
       </div>
       <div className='budgetUpdater'>
-        <input className="input" placeholder='Enter new budget here'></input>
-        <button id="editButton">Edit Budget</button>
+        <input className="input" placeholder='Enter new budget here' onChange={(e) => setInputBudget(e.target.value)}></input>
+        <button id="editButton" name={'Monthly Budget'} value={inputBudget} onClick={updateBudget}>Edit Budget</button>
       </div>
     </div>
   )

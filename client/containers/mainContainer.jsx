@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import InputsContainer from "./inputsContainer.jsx";
 import DisplayContainer from "./DisplayContainer.jsx";
-import logo from "../../Pockets-logo.png";
+import logo from "../../logo.png";
 import utils from "../utils.js";
 
 function mainContainer() {
@@ -10,13 +10,17 @@ function mainContainer() {
   const [transactionCategory, setTransactionCategory] = useState("");
   const [total, setTotal] = useState(0);
   const [allTransactions, setAllTransactions] = useState([]);
-  const [categoryPercent, setCategoryPercent ] = useState([11, 11, 11, 11, 11, 11, 11, 11, 11])
-  
+  const [categoryPercent, setCategoryPercent ] = useState([11, 11, 11, 11, 11, 11, 11, 11, 11]);
+  const [monthlyBudget, setMonthlyBudget] = useState(0);
+  const [bigPurchase, setBigPurchase] = useState(0);
 
   useEffect(() => {
     fetch("http://localhost:8080/api/transactions")
       .then((response) => response.json())
       .then((data) => {
+        console.log('budgets in mainContainer', data.budgets);
+        setMonthlyBudget(data.budgets[0].amount);
+        setBigPurchase(data.budgets[1].amount);
         setAllTransactions(data.data);
         setTotal(data.total);
         utils.updatePieChart(data.data, data.total, setCategoryPercent);
@@ -76,6 +80,10 @@ function mainContainer() {
         setAllTransactions={setAllTransactions}
         categoryPercent={categoryPercent}
         setCategoryPercent={setCategoryPercent}
+        monthlyBudget={monthlyBudget}
+        setMonthlyBudget={setMonthlyBudget}
+        setBigPurchase={setBigPurchase}
+        bigPurchase={bigPurchase}
       />
     </div>
   );

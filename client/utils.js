@@ -35,6 +35,8 @@ const utils = {
         cache[allTransactions[i].category] = Number(allTransactions[i].amount);
       } else cache[allTransactions[i].category] += Number(allTransactions[i].amount);
     }
+    // cache['savings']
+    // { Gas: 300, Savings 5000,}
     const obj = {
       "Housing/Rent": 0,
       "Utilities": 0,
@@ -46,7 +48,9 @@ const utils = {
       "Savings": 0,
       "Other": 0,
     };
+    // second obj { savings, Big Purchance value}
     for (const property in cache) {
+      // if property = savings then we update our savings state, or savings perectent state 
       obj[property] = (cache[property] / total) * 100;
     }
     // console.log(obj)

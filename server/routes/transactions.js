@@ -5,14 +5,13 @@ const transactionController = require('../controllers/transactionController');
 
 
 //for displaying totals for transactions/summary data
-router.get('/', transactionController.getTransaction, transactionController.getTotal, (req, res) => {
+router.get('/', transactionController.getTransaction, transactionController.getTotal, transactionController.getBudgets, (req, res) => {
     // console.log(res.locals)
     res.status(201).json({...res.locals});
 
     // getting error: Express error handler caught unknown middleware error
     // Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
     // maybe because res.locals needs to be an array, but getting an object right now
-
 });
 
 //on 'submit' add transaction to database
@@ -25,9 +24,9 @@ router.post('/', transactionController.addTransaction, transactionController.get
 });
 
 //on 'edit', find and update an existing transaction 
-// router.update('/', (req, res) => {
-
-// });
+router.put('/', transactionController.editBudgets, transactionController.getBudgets, (req, res) => {
+    return res.status(200).json({...res.locals});
+});
 
 //on 'delete' find and delete an existing transaction
 router.delete('/', 
