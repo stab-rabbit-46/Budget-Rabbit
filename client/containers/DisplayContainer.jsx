@@ -40,8 +40,9 @@ export default function DisplayContainer({ total, setTotal, allTransactions, set
       .then((response) => response.json())
       .then((data) => {
         console.log('data.budget inside Display Container: ', data.budget);
-        setMonthlyBudget(data.budgets[0].amount);
-        setBigPurchase(data.budgets[1].amount);
+        for(let budget of data?.budgets){
+          budget['budget_name'] === 'Monthly Budget' ? setMonthlyBudget(budget.amount) : setBigPurchase(budget.amount)
+        }
         setInputBudget('');
         setInputBigPurchase('');
         
@@ -87,11 +88,11 @@ export default function DisplayContainer({ total, setTotal, allTransactions, set
           inputBigPurchase={inputBigPurchase}
           setInputBigPurchase={setInputBigPurchase}
         />
-        <PieChart
+        {/* <PieChart
           title={'Total Saved'}
           currentLabels={bigPurchaseLabels}
           categoryPercent={categoryPercent}
-        />
+        /> */}
       </div>
     </div>
   )
